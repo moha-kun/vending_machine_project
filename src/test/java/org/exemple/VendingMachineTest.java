@@ -1,5 +1,8 @@
 package org.exemple;
 
+import org.exemple.exceptions.CoinNotAcceptedException;
+import org.exemple.exceptions.NoCoinsForChangeException;
+import org.exemple.exceptions.ProductOutOfStockException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

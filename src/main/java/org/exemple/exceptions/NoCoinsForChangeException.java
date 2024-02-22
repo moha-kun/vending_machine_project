@@ -1,4 +1,4 @@
-package org.exemple;
+package org.exemple.exceptions;
 
 public class NoCoinsForChangeException extends RuntimeException {
 
