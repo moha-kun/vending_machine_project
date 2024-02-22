@@ -60,11 +60,11 @@ public class VendingMachine {
         return result;
     }
 
-    public String submit() throws Exception {
+    public String submit() {
         if (selectedProduct.isEmpty() && getUserBalance() == 0)
-            throw new Exception("Select a product first");
+            throw new RuntimeException("Select a product and insert a coin first");
         if (!isThereAChange())
-            return "There is no coins for change";
+            throw new NoCoinsForChangeException("There is no coins for change");
         String product = selectedProduct;
         int productPrice = products.get(selectedProduct);
         int balance = getUserBalance();
@@ -73,9 +73,7 @@ public class VendingMachine {
                 "The remaining change: " + (balance - productPrice);
     }
 
-    public boolean isThereAChange() {
-        if (getUserBalance() == 0 || selectedProduct.isEmpty())
-            return false;
+    private boolean isThereAChange() {
         int change = getUserBalance() - products.get(selectedProduct);
         if (change < 0)
             return false;
@@ -87,7 +85,7 @@ public class VendingMachine {
         return false;
     }
 
-    public Map<Integer, Integer> getChangeCombination() {
+    private Map<Integer, Integer> getChangeCombination() {
         int change = getUserBalance() - products.get(selectedProduct);
         int[] acceptedCoins = new int[]{10, 5, 2, 1};
         int acceptedCoinsIndex = 0;
@@ -110,7 +108,7 @@ public class VendingMachine {
         return changeCombination;
     }
 
-    public void cleanAfterSubmitting() {
+    private void cleanAfterSubmitting() {
         for (int coin : ACCEPTED_COINS) {
             int currentCoinStock = coinsStock.get(coin) - changeCombination.get(coin) + userBalance.get(coin);
             coinsStock.put(coin, currentCoinStock);
@@ -122,23 +120,11 @@ public class VendingMachine {
         changeCombination = initializeCoinsMap();
     }
 
-    public int getUserBalance() {
+    private int getUserBalance() {
         int balance = 0;
         for (Map.Entry<Integer, Integer> entry : userBalance.entrySet()) {
             balance += entry.getKey() * entry.getValue();
         }
         return balance;
-    }
-
-    @Override
-    public String toString() {
-        return "VendingMachine{" +
-                "ACCEPTED_COINS=" + ACCEPTED_COINS +
-                ", coinsStock=" + coinsStock +
-                ", products=" + products +
-                ", userBalance=" + userBalance +
-                ", selectedProduct='" + selectedProduct + '\'' +
-                ", changeCombination=" + changeCombination +
-                '}';
     }
 }
