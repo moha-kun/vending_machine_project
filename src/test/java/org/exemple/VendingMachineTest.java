@@ -124,7 +124,13 @@ public class VendingMachineTest {
 
         vendingMachine.reset();
 
-        String expectedMessage = "VendingMachine{ACCEPTED_COINS=[1, 2, 5, 10], coinsStock={1=5, 2=2, 5=0, 10=0}, products={coca=8, twix=5, bueno=20, water=7}, userBalance={1=0, 2=0, 5=0, 10=0}, selectedProduct='', changeCombination={1=0, 2=0, 5=0, 10=0}}";
+        String expectedMessage = "VendingMachine{" +
+                "ACCEPTED_COINS=[1, 2, 5, 10]," +
+                " coinsStock={1=5, 2=2, 5=0, 10=0}," +
+                " products={coca=8, twix=5, bueno=20, water=7}," +
+                " userBalance={1=0, 2=0, 5=0, 10=0}," +
+                " selectedProduct=''," +
+                " changeCombination={1=0, 2=0, 5=0, 10=0}}";
         String actualMessage = vendingMachine.toString();
         Assertions.assertEquals(expectedMessage, actualMessage);
     }
