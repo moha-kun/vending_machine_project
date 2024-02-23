@@ -17,11 +17,21 @@ public class VendingMachine {
     private Map<Integer, Integer> changeCombination;
 
     public VendingMachine() {
+        init();
+    }
+
+    private void init() {
         selectedProduct = "";
         products = new HashMap<>();
         coinsStock =  initializeCoinsMap();
         userBalance = initializeCoinsMap();
         changeCombination = initializeCoinsMap();
+        addProduct("water", 7);
+        addProduct("coca", 8);
+        addProduct("bueno", 20);
+        addProduct("twix", 5);
+        addCoinsStock(1, 5);
+        addCoinsStock(2, 2);
     }
 
     private Map<Integer, Integer> initializeCoinsMap() {
@@ -77,6 +87,10 @@ public class VendingMachine {
                 "The remaining change: " + (balance - productPrice);
     }
 
+    public void reset() {
+        init();
+    }
+
     private boolean isThereAChange() {
         int change = getUserBalance() - products.get(selectedProduct);
         if (change < 0)
@@ -130,5 +144,17 @@ public class VendingMachine {
             balance += entry.getKey() * entry.getValue();
         }
         return balance;
+    }
+
+    @Override
+    public String toString() {
+        return "VendingMachine{" +
+                "ACCEPTED_COINS=" + ACCEPTED_COINS +
+                ", coinsStock=" + coinsStock +
+                ", products=" + products +
+                ", userBalance=" + userBalance +
+                ", selectedProduct='" + selectedProduct + '\'' +
+                ", changeCombination=" + changeCombination +
+                '}';
     }
 }

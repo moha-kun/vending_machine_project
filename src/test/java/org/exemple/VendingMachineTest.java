@@ -20,12 +20,6 @@ public class VendingMachineTest {
     @BeforeEach
     public void setUp() {
         vendingMachine = new VendingMachine();
-        vendingMachine.addProduct("water", 7);
-        vendingMachine.addProduct("coca", 8);
-        vendingMachine.addProduct("bueno", 20);
-        vendingMachine.addProduct("twix", 5);
-        vendingMachine.addCoinsStock(1, 5);
-        vendingMachine.addCoinsStock(2, 2);
     }
 
     @ParameterizedTest
@@ -116,5 +110,22 @@ public class VendingMachineTest {
                         {"twix", 2, "There is no coins for change"},
                 }
         );
+    }
+
+    @Test
+    public void shouldReset() {
+        vendingMachine.insertCoin(10);
+        vendingMachine.selectProduct("water");
+        vendingMachine.submit();
+
+        vendingMachine.insertCoin(10);
+        vendingMachine.selectProduct("coca");
+        vendingMachine.submit();
+
+        vendingMachine.reset();
+
+        String expectedMessage = "VendingMachine{ACCEPTED_COINS=[1, 2, 5, 10], coinsStock={1=5, 2=2, 5=0, 10=0}, products={coca=8, twix=5, bueno=20, water=7}, userBalance={1=0, 2=0, 5=0, 10=0}, selectedProduct='', changeCombination={1=0, 2=0, 5=0, 10=0}}";
+        String actualMessage = vendingMachine.toString();
+        Assertions.assertEquals(expectedMessage, actualMessage);
     }
 }
